@@ -1,0 +1,8 @@
+# 目标位置的service
+
+float32 g_x
+float32 g_y
+float32 g_w
+---
+# 是否收到
+bool status

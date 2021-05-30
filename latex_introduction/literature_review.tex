@@ -1,0 +1,377 @@
+\documentclass[cs4size,a4paper]{ctexart}   
+
+\usepackage{cite}
+\usepackage{url}
+%===数学符号公式===
+\usepackage{amsmath}    					% AMS LaTeX宏包
+\usepackage[style=1]{mdframed}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{bm}                      	% 数学公式中的黑斜体
+\usepackage{bbm}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}                	% 英文花体字 体
+\usepackage{bbding,manfnt}    			% 一些图标，如 \dbend
+\usepackage{lettrine}                	% 首字下沉，命令\lettrine
+\def\attention{\lettrine[lines=2,lraise=0,nindent=0em]{\large\textdbend\hspace{1mm}}{}}
+\usepackage{longtable}
+\usepackage{enumerate}
+\usepackage[toc,page]{appendix}
+\usepackage{geometry}         			% 页边距调整
+\geometry{top=3.0cm,bottom=2.7cm,left=2.5cm,right=2.5cm}
+\usepackage[colorinlistoftodos,prependcaption,textsize=small]{todonotes}
+%===公式按章编号===
+\numberwithin{equation}{section}
+\numberwithin{table}{section}
+\numberwithin{figure}{section}
+%===基本格式预置===
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}  
+\fancyhead[C]{\zihao{5}  \kaishu 自动化科学导论课程报告}
+\fancyfoot[C]{~\zihao{5} \thepage~}
+\renewcommand{\headrulewidth}{0.75pt} 
+\CTEXsetup[format={\centering\bfseries\zihao{-2}},name={第, 章}]{section}
+\CTEXsetup[nameformat={\bfseries\zihao{3}}]{subsection}
+\CTEXsetup[nameformat={\bfseries\zihao{4}}]{subsubsection}
+%===图形支持宏包===
+\usepackage{graphicx}        			% 嵌入png图像
+\usepackage{subfigure}
+\usepackage{float}
+\graphicspath{{figure/}}
+\usepackage{color,xcolor}     			% 支持彩色文本、底色、文本框等
+\usepackage[colorlinks,linkcolor=blue,anchorcolor=blue,citecolor=blue]{hyperref}
+%\usepackage{caption}
+\usepackage[ruled,linesnumbered]{algorithm2e}
+%\captionsetup{figurewithin=section}
+%===源码和流程图===
+\usepackage{listings,fontspec}         	% 粘贴源代码
+\newfontfamily\consolas{Consolas}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+%===颜色===
+\usepackage{color,xcolor}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\usepackage{xcolor}
+\lstset{ %
+%numberstyle=\tiny\monaco,
+%numberstyle=\color[RGB]{0,192,192},
+%backgroundcolor=\color{white},   		% choose the background color
+backgroundcolor=\color[RGB]{245,245,244},
+%backgroundcolor=\color[rgb]{1,1,0.76},
+basicstyle=\footnotesize\consolas,       % size of fonts used for the code
+identifierstyle=\footnotesize\consolas, 
+columns=fullflexible,
+breaklines=true,                 		% automatic line breaking only at whitespace
+captionpos=b,                    		% sets the caption-position to bottom
+tabsize=2,
+commentstyle=\color{mygreen}\consolas,   % comment style
+%commentstyle=\it\color[RGB]{0,96,96},
+escapeinside={\%*}{*)},          		% if you want to add LaTeX within your code
+keywordstyle=\color{blue}\consolas,      % keyword style
+stringstyle=\color{mymauve}\consolas,    % string literal style
+%stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+frame=single,
+rulesepcolor=\color{red!20!green!20!blue!20},
+%identifierstyle=\color{red},
+language=c++,
+framexleftmargin=1.9mm,
+xleftmargin=0.4em,
+frame=none,
+showstringspaces=false,
+numbers=none,
+}
+
+%--------------------
+\hypersetup{hidelinks}
+\usepackage{booktabs}  
+\usepackage{shorttoc}
+\usepackage{tabu,tikz}
+\usepackage{float}
+\usepackage{multirow}
+
+\tabcolsep=1ex
+\tabulinesep=\tabcolsep
+\newlength\tikzboxwidth
+\newlength\tikzboxheight
+\newcommand\tikzbox[1]{%
+        \settowidth\tikzboxwidth{#1}%
+        \settoheight\tikzboxheight{#1}%
+        \begin{tikzpicture}
+        \path[use as bounding box]
+                (-0.5\tikzboxwidth,-0.5\tikzboxheight)rectangle
+                (0.5\tikzboxwidth,0.5\tikzboxheight);
+        \node[inner sep=\tabcolsep+0.5\arrayrulewidth,line width=0.5mm,draw=black]
+                at(0,0){#1};
+        \end{tikzpicture}%
+        }
+\makeatletter
+\def\hlinew#1{%
+  \noalign{\ifnum0=`}\fi\hrule \@height #1 \futurelet
+   \reserved@a\@xhline}
+   
+\usepackage{CJK}
+\usepackage{ifthen}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}%
+%===使得公式随章节自动编号===
+\makeatletter
+\@addtoreset{equation}{section}
+\makeatother
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+%-------------------------
+\usepackage{pythonhighlight}
+\usepackage{tikz}                    
+\usepackage{tikz-3dplot}
+\usetikzlibrary{shapes,arrows,positioning}
+%===正文开始===
+\begin{document}
+%===定理类环境定义===
+\newtheorem{example}{例}              	% 整体编号
+\newtheorem{algorithem}{算法}	
+\newtheorem{theorem}{定理}            	% 按section编号
+\newtheorem{definition}{定义}
+\newtheorem{axiom}{公理}
+\newtheorem{property}{性质}
+\newtheorem{proposition}{命题}
+\newtheorem{lemma}{引理}
+\newtheorem{corollary}{推论}
+\newtheorem{remark}{注解}
+\newtheorem{condition}{条件}
+\newtheorem{conclusion}{结论}
+\newtheorem{assumption}{假设}
+%===重定义===
+\renewcommand{\contentsname}{目录}     
+\renewcommand{\abstractname}{摘要} 
+\renewcommand{\refname}{参考文献}     
+\renewcommand{\indexname}{索引}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\renewcommand{\appendixname}{附录}
+\renewcommand{\proofname}{证明}
+%\renewcommand{\algorithm}{算法} 
+\renewcommand\emph[1]{\textcolor{black}{\textbf{#1}}}
+%===封皮和前言===
+\begin{titlepage}
+\begin{center}
+% Upper part of the page
+\includegraphics[width=0.30\textwidth]{logo}\\[1cm]    
+\textsc{\Large Beijing University of Chemical Technology}\\[1.0cm]
+\textsc{\Large Computing Methods}\\[0.5cm]
+% Title
+\HRule \\[0.8cm]
+{\huge \bfseries 自动化科学导论课程报告}\\[0.4cm]
+\HRule \\[0.7cm]
+% Author
+\textsc{李昊}
+\tableofcontents 
+\vfill
+% Bottom of the page
+{创建日期：2020年3月25日}\\
+{更新日期：\today}
+\end{center}
+\end{titlepage}
+\pagestyle{plain}
+\pagenumbering{Roman}
+\thispagestyle{empty}
+%===正文===
+\pagestyle{fancy}
+\pagenumbering{arabic}
+
+\abstract
+AGV系统是集光、机、电、计算机于一体的高新技术。为了能够适应不同的使用要求和缩短新产品的开发周期，AGV的设计
+研究趋向于模块化，将AGV的各功能模块设计成不同的系列，再根据具体的使用要求进行组合。
+本文从AGV系统的软件部分出发，主要介绍AGV系统的两大模块的工作原理：AGV系统的导航（包括现有的定位与建图算法、栅格地图、现有的全局路径规划算法），
+AGV系统的转向控制系统和姿态控制算法。
+
+%===第一章===
+\section{简介}
+\subsection{AGV的导航（Navigation）}
+导航技术是AGV技术的研究核心，没有导航功能的AGV系统是很难想象的。举个例子，如果AGV系统想要在工厂等工作场所运输货物，
+它必须要在不触碰到任何障碍物的情况下运动到不同的地点。
+随着信息化技术的提升，CPU算力的提升和传感器的升级，AGV的柔性路径导航吸引了越来越多的研究者进行研究，产业化应用越来越广。
+柔性路径导航技术应用较多的是视觉与激光导航、惯性(IMU)导航\cite{5670227}、基于WIFI/UWB等无线信号定位\cite{4380919}的导航技术等。
+机器人实现其自主导航的前提是机器人自身位姿的确定，出于对定位精度的要求以及现实环境的复杂化，
+目前大多数导航系统都是由上述两种或者多种导航方式的结合组合导航技术\cite{7916260,}。
+
+
+\subsection{AGV的姿态控制（Steering control）}
+
+%===第二章===
+\section{同步定位与地图构建(SLAM)}
+\subsection{SLAM定义}
+同步定位与地图构建（SLAM或Simultaneous localization and mapping）是一种概念：希望机器人从未知环境的未知地点出发，在运动过程中通过重复观测到的地图特征（比如，墙角，柱子等）定位自身位置和姿态，再根据自身位置增量式的构建地图，从而达到同时定位和地图构建的目的。
+
+在误差和噪音条件下，定位和地图构建技术上的复杂度不支持两者同时获得连续的解。即时定位与地图构建（SLAM）是这样一个概念：把两方面的进程都捆绑在一个循环之中，以此支持双方在各自进程中都求得连续解；不同进程中相互迭代的反馈对双方的连续解有改进作用。
+
+同步定位与地图构建（SLAM）被定义为以下问题：在建立新地图模型或者改进已知地图的同时，在该地图模型上定位机器人。实际上，这两个核心问题如果分开解决，将毫无意义；必须同时求解。
+即通过控制数据$u_{1:t}$和观测数据$z_{1:t}$来求解位姿和地图的联合概率分布
+\begin{align}
+    p\left(x_{1: t}, m | z_{1: t}, u_{1: t-1}\right)
+\end{align}
+
+\subsection{经典V-SLAM方法}
+
+\subsubsection{稀疏法:ORB-SLAM2}
+该算法\cite{murORB2}是基于特征点的实时单目SLAM系统，在大规模的、小规模的、室内室外的环境都可以运行。它主要有以下贡献：
+\begin{enumerate}[1)]
+        \item 这是首个基于单目，双目和RGB-D相机的开源SLAM方案，这个方案包括，回环检测，地图重用和重定位。
+        \item 结果说明，BA优化比ICP或者光度和深度误差最小方法的更加精确。
+        \item 通过匹配远处和近处的双目匹配的点和单目观测，双目的结果比直接使用双目系统更加精确。
+        \item 针对无法建图的情况，提出了一个轻量级的定位模式 ，能够更加有效的重用地图。
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figure/orb.png}
+    \caption{ORB-SLAM主要分为三个线程进行，也就是如图所示的，分别是Tracking、LocalMapping和LoopClosing}
+\end{figure}
+
+\begin{enumerate}
+        \item 跟踪（Tracking）\\ 这一部分主要工作是从图像中提取ORB特征，根据上一帧进行姿态估计，或者进行通过全局重定位初始化位姿，然后跟踪已经重建的局部地图，优化位姿，再根据一些规则确定新的关键帧。
+        \item 建图（LocalMapping）\\ 这一部分主要完成局部地图构建。包括对关键帧的插入，验证最近生成的地图点并进行筛选，然后生成新的地图点，使用局部捆集调整（Local BA），最后再对插入的关键帧进行筛选，去除多余的关键帧。
+        \begin{align}
+                \{\mathbf{R}, \mathbf{t}\}=\underset{\mathbf{R}, \mathbf{t}}{\operatorname{argmin}} \sum_{i \in \mathcal{X}} \rho\left(\left\|\mathbf{x}_{(\cdot)}^{i}-\pi_{(\cdot)}\left(\mathbf{R} \mathbf{X}^{i}+\mathbf{t}\right)\right\|_{\Sigma}^{2}\right)
+        \end{align}
+        \item 闭环检测（LoopClosing）\\ 这一部分主要分为两个过程，分别是闭环探测和闭环校正。闭环检测先使用WOB进行探测，然后通过Sim3算法计算相似变换。闭环校正，主要是闭环融合和Essential Graph的图优化。
+\end{enumerate}
+
+\textbf{开源代码链接：}
+\url{https://github.com/raulmur/ORB_SLAM2}
+
+\subsubsection{多传感器融合:VINS-Mono}
+该算法\cite{8421746}是一种鲁棒且通用的单目视觉惯性状态估计器。采用一种基于紧耦合、非线性优化的方法，通过融合预积分后的IMU测量值和特征观测值，获得高精度的视觉惯性里程计。结合紧耦合方法，回环检测模块能够以最小的计算代价实现重定位。
+处理视觉和惯性测量的最简单的方法是松耦合的传感器融合\cite{8576618,8630025}，其中IMU被视为一个独立的模块，用于辅助运动的视觉结构(sfm)获得的纯视觉位姿估计。融合通常由扩展卡尔曼滤波(EKF)完成，其中IMU用于状态传播，而视觉位姿用于更新。
+  
+\textbf{IMU预积分（pre-integration）}
+
+在实践中，IMU通常以比摄像机更高的速率获取数据。不同的方法被提出来处理高速率的IMU测量值。最简单的方法是在基于EKF的方法中使用IMU进行状态传播[11][13]。在图优化公式中，为了避免重复的IMU重复积分，提出了一种有效的方法，即IMU预积分(IMU pre-integration)。
+通过一系列计算，得到下面的预积分估计值：
+\begin{align} 
+\hat{\boldsymbol{\alpha }}^{b_k}_{i+1} &= \hat{\boldsymbol{\alpha }}^{b_k}_i + \hat{\boldsymbol{\beta }}^{b_k}_i\delta t + \frac{1}{2} \mathbf {R}(\hat{\boldsymbol{\gamma }}^{b_k}_i)(\hat{\mathbf {a}}_i - \mathbf {b}_{a_i}) \delta t^2 \nonumber\\ \hat{\boldsymbol{\beta }}^{b_k}_{i+1} &= \hat{\boldsymbol{\beta }}^{b_k}_{i} + \mathbf {R}(\hat{\boldsymbol{\gamma }}^{b_k}_i)(\hat{\mathbf {a}}_i - \mathbf {b}_{a_i})\delta t\nonumber\\ \hat{\boldsymbol{\gamma }}^{b_k}_{i+1} &= \hat{\boldsymbol{\gamma }}^{b_k}_i \otimes {\left[\begin{array}{c}1\\ \frac{1}{2} (\hat{\boldsymbol{\omega }}_i- \mathbf {b}_{w_i})\delta t \end{array}\right]}
+\end{align}
+通过计算可以写下IMU测量模型所其对应的协方差${\mathbf {P}^{b_k}_{b_{k+1}}}$：
+\begin{equation} 
+{\left[\begin{array}{c}\hat{\boldsymbol{\alpha }}^{b_k}_{b_{k+1}}\\ \hat{\boldsymbol{\beta }}^{b_k}_{b_{k+1}}\\ \hat{\boldsymbol{\gamma }}^{b_k}_{b_{k+1}}\\ \mathbf {0}\\ \mathbf {0}\\ \end{array}\right]} = {\left[\begin{array}{c}\mathbf {R}^{b_k}_{w}(\mathbf {p}^{w}_{b_{k+1}} - \mathbf {p}^{w}_{b_k} + \frac{1}{2}\mathbf {g}^{w} \Delta t_k^2 - \mathbf {v}^{w}_{b_k} \Delta t_k) \\ \mathbf {R}^{b_k}_{w}(\mathbf {v}^{w}_{b_{k+1}} + \mathbf {g}^{w} \Delta t_k- \mathbf {v}^{w}_{b_k}) \\ \mathbf {q}^{w^{-1}}_{b_{k}} \otimes \mathbf {q}^{w}_{b_{k+1}}\\ {\mathbf {b}_a}_{b_{k+1}} - {\mathbf {b}_a}_{b_k}\\ {\mathbf {b}_w}_{b_{k+1}} -{\mathbf {b}_w}_{b_k}\\ \end{array}\right]}.
+\end{equation}
+
+\textbf{估计器初始化}
+
+单目紧耦合VIO是一个高度非线性的系统。由于单目相机无法直接观测到尺度，因此，如果没有良好的初始值，很难直接将这两种测量结果融合在一起。
+当IMU测量结果被大偏置破坏时，情况就变得更加复杂了。事实上，初始化通常是单目VINS最脆弱的步骤。需要一个鲁棒的初始化过程以确保系统的适用性。
+通过对齐IMU预积分与纯视觉SfM结果，我们可以粗略地恢复尺度、重力、速度，甚至偏置。这足以引导非线性单目VINS估计器。
+
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figure/vins2.png}
+        \caption{总体架构图}
+\end{figure}
+
+\textbf{开源代码链接：}
+\url{https://github.com/HKUST-Aerial-Robotics/VINS-Mono}
+
+
+
+\section{路径规划}
+\subsection{路径规划所使用的地图的建立}
+\subsubsection{代价地图的建立}
+代价地图（COSTMAP）是一种机器人收集传感器信息建立和更新的二维或三维地图。
+在ROS中，红色部分代表costmap中的障碍物，蓝色部分表示通过机器人内切圆半径膨胀出的障碍，红色多边形是footprint(机器人轮廓的垂直投影)。
+红色部分代表costmap中的障碍物，蓝色部分表示通过机器人内切圆半径膨胀出的障碍，红色多边形是footprint(机器人轮廓的垂直投影)。可以从下图简要了解。
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth]{figure/costmap.png}
+        \caption{代价地图表示形式}
+\end{figure}
+ROS的代价地图（costmap）采用网格（grid）形式，每个网格的值（cell cost）从0~255。分成三种状态：被占用（有障碍）、自由区域（无障碍）、未知区域。
+其原理也可以由下图得出。
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{figure/occupy.png}
+        \caption{代价地图原理}
+\end{figure}
+\subsubsection{代价地图的更新}
+通过不断地接受激光雷达扫描的数据（laserScan），不断更新代价地图（costmap）。由下图\cite{6942562}可以看到代价地图的生成流程。
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{figure/occupy1.png}
+        \caption{代价地图生成过程}
+\end{figure}
+
+\subsection{全局路径规划：Dijskra}
+该算法\cite{8784487}由经典最短路径算法Dijskra在2D占据地图上的应用得到。
+是一种静态路网中求解最短路径最有效的直接搜索方法，也是解决许多搜索问题的有效算法。算法中的距离估算值与实际值越接近，最终搜索速度越快。 公式表示为：
+\begin{align}
+        f(n)=g(n)+h(n)
+\end{align}
+其中$f(n)$是从初始状态经由状态n到目标状态的代价估计，$g(n)$是在状态空间中从初始状态到状态n的实际代价，$h(n)$是从状态n到目标状态的最佳路径的估计代价。对于路径搜索问题，状态就是图中的节点，代价就是距离。
+
+\subsection{全局路径规划：混合A*算法(Hybrid A*)}
+\subsubsection{提出背景}
+对于传统的Dijiskra\cite{8784487}/A*\cite{4082128}等路径规划算法都是以最短路径为唯一目标，
+这导致路径的生成取决于地图网格的分辨率而不考虑车辆的实际模型。所以，这种路径生成方式对于机器人的机械结构以及操控系统都是极大的挑战和负担。
+于是，在2007年斯坦福大学首次提出了Hybrid A*算法\cite{article}，通过考虑机器人、自动驾驶汽车的非整体约束，Hybrid A*产生的路径更加平滑
+、实践性更强。
+\subsubsection{混合A*算法与传统A*算法的对比}
+以下表格展示了传统A*算法\cite{4082128}和Hybrid A*算法\cite{article}的区别：
+\begin{table}[H]
+        \caption{对比}
+        \centering
+        \begin{tabular}{l|ll}
+        \toprule
+        性质   &Hybrid A* & A*\\
+        \midrule[2pt]
+        维数 & \((x,y,\theta, R)\)    & \((x,y)\)\\
+        H(n) & Max(Rends\_Shepp, A*)   & Manhattan,Euclidean  \\
+        节点 & 车辆的运动学模型为节点（2）  &  二维平面坐标点（1）\\
+        节点与节点连接处 &  交点可以不是栅格顶点（4）  & 交点是栅格顶点（3）\\
+        缺点 & 	不具有完备性 & 不满足车辆运动学特性\\
+         \\
+        \bottomrule
+        \end{tabular}
+\end{table}
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{figure/hybrid-a-star.png}
+\end{figure}
+\subsubsection{最终展示结果}
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{figure/hybrid-a-star-res.png}
+\end{figure}
+
+\subsection{全局路径规划：RRT*的改进方法}
+该算法\cite{6942562}由RRT改进而来，同时对轨迹进行了平滑处理。该算法方法通常能用更小的树在更短的时间内产生更平滑的路径。对于 RRT*，该方法还生成最短路径，并在给定更多规划时间时实现成本最低的解决方案。
+
+\subsubsection{RRT / RRT* 的特点}
+
+通过抽样来在已知的地图上建立无向图，进而通过搜索方法寻找相对最优的路径。不同点在于，PRM算法在一开始就通过抽样在地图上构建出完整的无向图，再进行图搜索；而RRT算法则是从某个点出发一边搜索，一边抽样并建图。
+
+\subsubsection{RRT / RRT* 的缺点}
+
+RRT算法是概率完备的：只要路径存在，且规划的时间足够长，就一定能确保找到一条路径解。注意“且规划的时间足够长”这一前提条件，说明了如果规划器的参数设置不合理（如搜索次数限制太少、采样点过少等），就可能找不到解。
+
+\subsubsection{改进方法：POSQ}
+
+由于RRT产生了很多点，所以根据原来的反馈方程，目标会在每个点处停下来。本方法通过修改反馈方程，使得在多次扩展中的恒定正向速度有所需的最大值。即以下闭环模型：
+\begin{align}
+        &\dot{\rho}=-K_{\rho}\cos\alpha\tanh(K_{v}\rho), \cr &\dot{\alpha}=K_{\rho}{\sin\alpha\over \rho}\tanh(K_{v}\rho)-K_{\alpha}\alpha-K_{\phi}\phi, \cr &\dot{\phi}=-K_{\alpha}\alpha-K_{\phi}\phi.
+\end{align}
+由此得到如图所示效果：
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{figure/rrt-extend.png}
+        \caption{RRT-EXTEND的效果图}
+\end{figure}
+%===参考文献===
+\addcontentsline{toc}{section}{参考文献}
+\bibliographystyle{ieeetr}     %论文引用格式:缩写
+\bibliography{conference_101719} %bib文件地址
+\end{document}
+%===结束===
+
+
+
